@@ -34,11 +34,11 @@ export default function NFTDetails() {
   // Fetch signer from wagmi
   const { data: signer } = useSigner();
 
-  const MarketplaceContract = useContract({
-    addressOrName: MARKETPLACE_ADDRESS,
-    contractInterface: MarketplaceABI,
-    signerOrProvider: signer,
-  });
+  const MarketplaceContract = new Contract(
+    MARKETPLACE_ADDRESS,
+    MarketplaceABI,
+    signer
+  );
 
   async function fetchListing() {
     const listingQuery = `
@@ -189,7 +189,7 @@ export default function NFTDetails() {
                 </span>
               )}
 
-              {/*{isOwner && isActive && (
+              {isOwner && isActive && (
                 <>
                   <div className={styles.updateListing}>
                     <input
@@ -217,9 +217,9 @@ export default function NFTDetails() {
                     Cancel Listing
                   </button>
                 </>
-                    )}*/}
+              )}
 
-              {/*{!isOwner && isActive && (
+              {!isOwner && isActive && (
                 <button
                   className={styles.btn}
                   disabled={buying}
@@ -227,7 +227,7 @@ export default function NFTDetails() {
                 >
                   Buy Listing
                 </button>
-              )}*/}
+              )}
             </div>
           </div>
         )}
